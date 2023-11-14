@@ -1,0 +1,36 @@
+.player {
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 100%;
+}
+
+.song-info {
+    width: 20%;
+    margin-left: 1rem;
+}
+
+.song-title {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.song-artist {
+    font-weight: 500;
+    font-size: 1.5em;
+    color: #ccc;
+}
+
+.audio {
+    width: 60%;
+}
+
+.action {
+    width: 20%;
+}
+
+.info-container {
+    width: 100%;
+    overflow: hidden;
+    height: 3rem;
+}

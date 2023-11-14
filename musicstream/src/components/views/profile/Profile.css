@@ -1,0 +1,135 @@
+.landing-profile {
+    width: 70%;
+    height: 100%;
+}
+
+.artist-profile {
+    width: 100%;
+    min-height: 20rem;
+}
+
+.cover-photo {
+    width: 100%;
+    height: 20rem;
+    background-color: #D3D3D3;
+    border-radius: 5px;
+    margin-top: 2rem;
+    border: solid black 3px;
+}
+
+.missing-cover-photo {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.cover-photo-img {
+    width: 100%;
+    height: 20rem;
+    border-radius: 5px;
+}
+
+.form-profile-forms {
+    width: 35rem;
+}
+
+.form-profile-container {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: space-between;
+}
+
+.genres-input {
+    display: flex;
+    align-items: center;
+}
+
+.plus-icon-cont {
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.plus-icon-cont:hover {
+    transform: scale(1.1);
+}
+
+.genres-container {
+    width: 30rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.genre {
+    padding: .5rem;
+    border: solid black 3px;
+    border-radius: 5px;
+    display: inline;
+    font-size: 2em;
+    font-weight: 700;
+    margin: .5rem;
+}
+
+.submit-div {
+    margin: 0 1rem;
+    width: 20rem;
+    border: solid black 3px;
+    border-radius: 5px;
+    padding: 2rem;
+    height: 20rem;
+    padding: 3rem;
+    background-color: #ef5aa0;
+}
+
+.submit-profile {
+    width: 20rem;
+    height: 4rem;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #f58021;
+} 
+
+.created-profile {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-image-image {
+    width: 20rem;
+    height: 20rem;
+}
+
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-image-username {
+    font-size: 4em;
+}
+
+.genres-containe {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.results-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.result {
+    width: 100%;
+    padding: .2rem;
+    margin: .2rem 0;
+    display: flex;
+    justify-content: space-between;
+}
