@@ -15,6 +15,10 @@ const albumSchema = mongoose.Schema(
     },
     songs: [
       {
+        albumId: {
+          type:  mongoose.Schema.Types.ObjectId,
+          required: true
+        },
         name: {
             type: String,
             required: true
@@ -22,6 +26,10 @@ const albumSchema = mongoose.Schema(
         fileUrl: {
             type: String,
             required: true
+        },
+        duration: {
+          type: Number,
+          required: true
         }
       }
     ],

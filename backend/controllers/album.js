@@ -5,7 +5,7 @@ const Album = require("../models/album");
 const { validationResult } = require("express-validator");
 
 const createAlbum = asyncHandler(async (req, res) => {
-    const { name, profilePhotoUrl, coverPhotoUrl, songs } = req.body;
+    const { name, coverPhotoUrl, songs } = req.body;
 
     const errors = validationResult(req);
     console.log(errors);
@@ -25,16 +25,17 @@ const createAlbum = asyncHandler(async (req, res) => {
             album = { ...album, coverPhotoUrl };
         }
 
+        let newAlbum = new Album(album);
+
         if (songs) {
             songs.forEach((song) => {
-                if (!song.name || ! song.fileUrl) {
-                    return res.status(400).json({ errors: [{ msg: "All songs must have a name and a valid path" }] })
+                if (!song.name || ! song.fileUrl || !song.duration) {
+                    return res.status(400).json({ errors: [{ msg: "Song data incomplete" }] })
                 }
+                song.albumId = album.id;
             })
             album = { ...album, songs }
         }
-
-        let newAlbum = new Album(album);
 
         await newAlbum.save();
 
@@ -46,13 +47,29 @@ const createAlbum = asyncHandler(async (req, res) => {
     }
 })
 
-const getAlbum = asyncHandler(async (req, res) => {
+// const getAlbum = asyncHandler(async (req, res) => {
+//     try {
+//         const album = await Album.findOne({ _id: req.params.albumId })
+//         if (!album) {
+//             return res.status(404).json({ errors: [{ msg: "Album not found" }] });
+//         }
+//         return res.status(200).json({ album });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ msg: "Server error" });
+//     }
+// })
+
+const getAllAlbums = asyncHandler(async (req, res) => {
     try {
-        const abum = await Album.findOne({ _id: req.params.albumId })
-        if (!album) {
-            return res.status(404).json({ errors: [{ msg: "Album not found" }] });
+        let profile = await ArtistProfile.findOne({ userId: req.user.id });
+        if (!profile) {
+            return res.status(404).json({ errors: [{ msg: "Profile not found" }] });
         }
-        return res.status(200).json({ album });
+
+        const albums = await Album.find({ profileId: profile.id })
+
+        return res.status(200).json({ albums });
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: "Server error" });
@@ -61,5 +78,5 @@ const getAlbum = asyncHandler(async (req, res) => {
 
 module.exports = {
     createAlbum,
-    getAlbum
+    getAllAlbums
 }
