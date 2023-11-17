@@ -20,6 +20,7 @@ import { MdLibraryMusic as AlbumIcon } from "react-icons/md";
 import { IoMusicalNotes as SongIcon } from "react-icons/io5";
 import Modal from "./components/generic/modal/Modal";
 import AddAlbumForm from "./components/album/add-album/AddAlbumForm";
+import SongUpload from "./components/songs/song-upload/SongUpload";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const App = () => {
 
   const [openCreate, setOpenCreate] = useState(false);
   const [openAlbumModal, setOpenAlbumModal] = useState(false);
+  const [openSongModal, setOpenSongModal] = useState(false);
 
   useEffect(() => {
     console.log(user)
@@ -85,21 +87,41 @@ const App = () => {
           >
           <div className="add-album-container">
               <PlaylistIcon className="add-album-icons" size={40} />
-              <AlbumIcon 
-                onClick={() => { setOpenAlbumModal(true); setOpenCreate(false)} } 
-                className="add-album-icons" 
-                size={40} 
-              />
-              <SongIcon className="add-album-icons" size={40} />
+              {
+                user?.user?.user?.isArtist &&
+                <>
+                  <AlbumIcon 
+                    onClick={() => { setOpenAlbumModal(true); setOpenCreate(false)} } 
+                    className="add-album-icons" 
+                    size={40} 
+                  />
+                  <SongIcon 
+                    onClick={() => { setOpenSongModal(true); setOpenCreate(false)} } 
+                    className="add-album-icons" 
+                    size={40} 
+                  />
+                </>
+              }
             </div>
           </Create>
 
           <Modal
-            color={"#ef5aa0"}
+            color={"#f58021"}
             open={openAlbumModal}
             setOpen={setOpenAlbumModal}
           >
-            <AddAlbumForm />
+            <AddAlbumForm
+              setOpenAlbumModal={setOpenAlbumModal}
+            />
+          </Modal>
+
+          <Modal
+            color={"#f58021"}
+            open={openSongModal}
+            setOpen={setOpenSongModal}
+          >
+            <h2 className="signup-title">upload song</h2>
+            <SongUpload />
           </Modal>
         </>
       }

@@ -11,6 +11,7 @@ import ProfileImage from "../profile-image/ProfileImage";
 import {
     loadUser
 } from "../../../../actions/user";
+import AlbumList from "../../../album/album-list/AlbumList";
 
 const ArtistProfile = ({ user }) => {
     const dispatch = useDispatch();
@@ -125,6 +126,9 @@ const ArtistProfile = ({ user }) => {
                                 )
                             })
                         }
+                    </div>
+                    <div style={{ marginTop: "2rem", width: "100%" }}>
+                        <AlbumList />
                     </div>
                 </div> :
                 (

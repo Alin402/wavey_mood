@@ -4,14 +4,15 @@ const { protect } = require('../middleware/auth');
 const { body } = require("express-validator");
 const {
     createAlbum,
-    getAlbum
+    getAllAlbums
 } = require("../controllers/album");
 
-router.post('/album', [
-    protect,
+router.post('/', [
     body("name").notEmpty().withMessage("You must choose a name for the album"),
   ], createAlbum)
 
-router.get('/album/:albumId', protect, getAlbum);
+//router.get('/:albumId', protect, getAlbum);
+
+router.get('/all', protect, getAllAlbums);
 
 module.exports = router;

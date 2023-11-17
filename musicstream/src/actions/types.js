@@ -24,3 +24,8 @@ export const DELETE_POST = 'DELETE_POST';
 export const ADD_POST = 'ADD_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
+
+export const CREATE_ALBUM = 'CREATE_ALBUM'
+export const GET_ALBUM = 'GET_ALBUM';
+export const GET_ALBUMS = 'GET_ALBUMS';
+export const ALBUM_ERROR = 'ALBUM_ERROR';

@@ -16,7 +16,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     min-width: 40rem;
-    min-height: 50rem;
+    min-height: 40rem;
 }
 
 .modal-header {
