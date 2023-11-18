@@ -2,7 +2,9 @@ import {
     CREATE_ALBUM,
     GET_ALBUM,
     GET_ALBUMS,
-    ALBUM_ERROR
+    ALBUM_ERROR,
+    UPLOAD_SONG,
+    DELETE_ALBUM
 } from "../actions/types";
 
 const initialState = {
@@ -21,6 +23,8 @@ const album = (state = initialState, action) => {
         return { ...state, loading: false, albums: payload };
       case GET_ALBUM:
         return { ...state, loading: false, album: payload }
+      case DELETE_ALBUM:
+        return { ...state, loading: false, albums: state.albums.filter((album) => album.id !== payload.id) }
       default:
         return state;
     }

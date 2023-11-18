@@ -1,7 +1,6 @@
-import api from './api';
+import { api, apifd } from './api';
 
 const setAuthToken = (token) => {
-  console.log("intra")
   if (token) {
     api.defaults.headers.common['x-auth-token'] = token;
     localStorage.setItem('token', token);

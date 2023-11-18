@@ -3,6 +3,7 @@ const ArtistProfile = require("../models/artistProfile");
 const User = require("../models/user");
 const Album = require("../models/album");
 const { validationResult } = require("express-validator");
+const mongoose = require("mongoose")
 
 const createAlbum = asyncHandler(async (req, res) => {
     const { name, coverPhotoUrl, songs } = req.body;
@@ -47,18 +48,21 @@ const createAlbum = asyncHandler(async (req, res) => {
     }
 })
 
-// const getAlbum = asyncHandler(async (req, res) => {
-//     try {
-//         const album = await Album.findOne({ _id: req.params.albumId })
-//         if (!album) {
-//             return res.status(404).json({ errors: [{ msg: "Album not found" }] });
-//         }
-//         return res.status(200).json({ album });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ msg: "Server error" });
-//     }
-// })
+const getAlbum = asyncHandler(async (req, res) => {
+    try {
+        if (!req.params.albumId) {
+            return res.status(404).json({ errors: [{ msg: "Album id not found" }] });
+        }
+        const album = await Album.findOne({ _id: req.params.albumId })
+        if (!album) {
+            return res.status(404).json({ errors: [{ msg: "Album not found" }] });
+        }
+        return res.status(200).json({ album });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
 
 const getAllAlbums = asyncHandler(async (req, res) => {
     try {
@@ -76,7 +80,75 @@ const getAllAlbums = asyncHandler(async (req, res) => {
     }
 })
 
+const uploadSong = asyncHandler(async (req, res) => {
+    const { name, duration, albumId } = req.body;
+    const file = req.file;
+
+    if (!name || ! duration || !albumId || !file) {
+        return res.status(400).json({ errors: [{ msg: "Incorrect data provided" }] });
+    }
+
+    try {
+        let profile = await ArtistProfile.findOne({ userId: req.user.id });
+        if (!profile) {
+            return res.status(404).json({ errors: [{ msg: "Profile not found" }] });
+        }
+
+        if (!req.body.albumId) {
+            return res.status(400).json({ errors: [ { msg: "Album id not specified" } ] });
+        }
+
+        if (!req.body.duration) {
+            return res.status(400).json({ errors: [ { msg: "Duration of song could not be calculated" } ] });
+        }
+
+        let album = await Album.findOne({ _id: albumId });
+
+        if (!album) {
+            return res.status(404).json({ errors: [ { msg: "Album not found" } ] });
+        }
+
+        let newSong = {
+            albumId,
+            name,
+            fileUrl: file.filename,
+            duration,
+            artistName: profile.username,
+            albumName: album.name
+        }
+
+        album.songs = [...album.songs, newSong]
+
+        await album.save();
+
+        return res.status(200).json({ song: newSong });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
+const deleteAlbum = asyncHandler(async (req, res) => {
+    try {
+        if (!req.params.albumId) {
+            return res.status(404).json({ errors: [{ msg: "Album id not found" }] });
+        }
+        const album = await Album.findOne({ _id: req.params.albumId })
+        if (!album) {
+            return res.status(404).json({ errors: [{ msg: "Album not found" }] });
+        }
+        await Album.deleteOne({ _id: album.id })
+        return res.status(200).json({ album });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
 module.exports = {
     createAlbum,
-    getAllAlbums
+    getAllAlbums,
+    getAlbum,
+    uploadSong,
+    deleteAlbum
 }

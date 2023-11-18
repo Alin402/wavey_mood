@@ -4,6 +4,7 @@ import Player from "./components/player/Player";
 import LandingView from "./components/views/landing/LandingView";
 import MainView from "./components/views/main/MainView";
 import SignUpView from "./components/views/signup/SignUpView";
+import AlbumView from "./components/views/album/AlbumView";
 import LogInView from "./components/views/signup/LogInView"
 import Navigation from "./components/navigation/Navigation";
 import { Routes, Route } from "react-router-dom";
@@ -70,6 +71,10 @@ const App = () => {
             path="main"
             element={<PrivateRoute component={MainView} />}
           />
+          <Route
+            path="/album/:albumId"
+            element={<PrivateRoute component={AlbumView} />}
+          />
         </Routes>
       </div>
       <div className="bottom">
@@ -121,7 +126,9 @@ const App = () => {
             setOpen={setOpenSongModal}
           >
             <h2 className="signup-title">upload song</h2>
-            <SongUpload />
+            <SongUpload 
+              setOpenModal={setOpenSongModal}
+            />
           </Modal>
         </>
       }

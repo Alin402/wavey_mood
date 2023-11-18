@@ -29,3 +29,11 @@ export const CREATE_ALBUM = 'CREATE_ALBUM'
 export const GET_ALBUM = 'GET_ALBUM';
 export const GET_ALBUMS = 'GET_ALBUMS';
 export const ALBUM_ERROR = 'ALBUM_ERROR';
+export const DELETE_ALBUM = "DELETE_ALBUM";
+
+export const UPLOAD_SONG = "UPLOAD_SONG";
+
+export const SET_CURRENT_SONG = "SET_CURRENT_SONG";
+export const GET_CURRENT_SONG = "GET_CURRENT_SONG";
+export const ADD_SONG_IN_QUEUE = "ADD_SONG_IN_QUEUE";
+export const SET_QUEUE = "SET_QUEUE";

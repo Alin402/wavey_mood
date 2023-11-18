@@ -1,41 +1,67 @@
 import "../Songs.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    getAllAlbums
-} from "../../../actions/album";
 import { IoMusicalNotes as SongIcon } from "react-icons/io5";
+import {
+    getAllAlbums,
+    uploadSong
+} from "../../../actions/album";
+import { useNavigate } from "react-router-dom";
+import { api } from "../../../utils/api";
 
-const SongUpload = () => {
+const SongUpload = ({ setOpenModal }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const albums = useSelector((state) => state.album.albums);
     const loadingAlbums = useSelector((state) => state.album.loading);
 
     const [formData, setFormData] = useState({
+        albumId: null,
         name: "",
-        duration: 0,
+        duration: 12,
         file: null
     })
 
-    const handleFileChange = (e) => {
-        setFormData({ ...formData, file: e.target.files[0] })
-    }
+    const [fileName, setFileName] = useState("");
 
     useEffect(() => {
         dispatch(getAllAlbums());
     }, [])
 
+    const handleFileChange = (e) => {
+        setFormData({ ...formData, file: e.target.files[0] })
+        setFileName(e.target.files[0].name)
+    }
+
+    const handleNameChange = (e) => {
+        setFormData({ ...formData, name: e.target.value })
+    }
+
+    const handleAlbumChange = (e) => {
+        setFormData({ ...formData, albumId: e.target.value })
+    }
+
+    const submit = async () => {
+        let fd = new FormData();
+        fd.append("albumId", formData.albumId);
+        fd.append("name", formData.name);
+        fd.append("file", formData.file );
+        fd.append("duration", formData.duration);
+        dispatch(uploadSong(fd, navigate, setOpenModal));
+    }
+
     return (
         <div>
             <div className="form-group">
                 <label className="form-label" htmlFor="album">album to upload song to:</label>
-                <select className="form-input" id="album" name="album">
+                <select className="form-input" id="album" name="album" onChange={(e) => handleAlbumChange(e)}>
+                    <option></option>
                     {
                         loadingAlbums ?
                         <h2>loading...</h2> :
                         albums?.length && albums.map((album, index) => {
                             return (
-                                <option key={index} value={album.id}>{album.name}</option>
+                                <option key={index} value={album._id}>{album.name}</option>
                             )
                         })
                     }
@@ -43,7 +69,7 @@ const SongUpload = () => {
             </div>
             <div className="form-group">
                 <label className="form-label" htmlFor="name">name of the song:</label>
-                <input type="text" className="form-input" id="name" name="name"></input>
+                <input type="text" className="form-input" id="name" name="name" onChange={(e) => handleNameChange(e)}></input>
             </div>
 
             <div className="form-group">
@@ -65,14 +91,13 @@ const SongUpload = () => {
                 <div style={{ width: "25rem" }}>
                     <h2>
                         {
-                            formData.file &&
-                            formData.file.name
+                            fileName
                         }
                     </h2>
                 </div>
             </div>
             <div className="form-group">
-                <button className="btn-submit">upload</button>
+                <button className="btn-submit" onClick={submit}>upload</button>
             </div>
         </div>
     )
