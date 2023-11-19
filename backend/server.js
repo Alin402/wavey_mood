@@ -20,6 +20,7 @@ app.use('/api/users', require('./routes/user'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/api/genre', require('./routes/genre'));
 app.use('/api/album', require('./routes/album'));
+app.use('/api/search', require('./routes/search'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));

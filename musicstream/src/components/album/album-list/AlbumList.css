@@ -1,5 +1,6 @@
 .album-list {
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .album-list-container {
@@ -9,27 +10,35 @@
 }
 
 .album {
-    width: 20rem;
-    height: 25rem;
+    width: 40rem;
+    height: 6rem;
     margin: 1rem;
-    padding: 0 1rem;
-    background-color: #f58021;
+    background-color: #1E1D1B;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .album-cover {
-    width: 20rem;
-    height: 20rem;
+    width: 6rem;
+    height: 100%;
 }
 
 .album-link {
-    color: inherit;
-    font-size: 1.6em;
+    color: #fff;
+    font-size: 1.3em;
     transition: all .2s;
+    margin-left: 2rem;
+    text-decoration: none;
 }
 
 .album-link:hover {
     transform: scale(1.1);
+}
+
+.delete-icon {
+    position: absolute;
+    right: 0;
+    top: .7rem;
+    cursor: pointer;
 }

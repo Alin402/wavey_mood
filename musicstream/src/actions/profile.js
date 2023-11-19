@@ -5,7 +5,8 @@ import {
   PROFILE_ERROR,
   GET_PROFILE,
   SET_ALERT,
-  USER_LOADED
+  USER_LOADED,
+  EDIT_PROFILE
 } from './types';
 
 export const createArtistProfile = (formData, navigate, setHasProfile) => async (dispatch) => {
@@ -40,7 +41,7 @@ export const createArtistProfile = (formData, navigate, setHasProfile) => async 
   }
 };
 
-export const getArtistProfile = () => async (dispatch) => {
+export const getArtistProfile = (callback) => async (dispatch) => {
   try {
     const res = await api.get('/profile/artist');
 
@@ -48,6 +49,8 @@ export const getArtistProfile = () => async (dispatch) => {
       type: GET_PROFILE,
       payload: res.data.profile
     });
+
+    callback(res.data.profile)
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -93,7 +96,7 @@ export const createNormalUserProfile = (formData, navigate, setHasProfile) => as
   }
 };
 
-export const getNormalUserProfile = () => async (dispatch) => {
+export const getNormalUserProfile = (callback) => async (dispatch) => {
   try {
     const res = await api.get('/profile/normalUser');
 
@@ -101,8 +104,75 @@ export const getNormalUserProfile = () => async (dispatch) => {
       type: GET_PROFILE,
       payload: res.data.profile
     });
+
+    callback(res.data.profile)
   } catch (err) {
     const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR
+    });
+  }
+};
+
+export const editArtistProfile = (formData, callback) => async (dispatch) => {
+  try {
+    const res = await api.put('/profile/artist/edit', formData);
+
+    if (res.data?.profile) {
+      dispatch({
+        type: EDIT_PROFILE,
+        payload: res.data.profile
+      });
+      dispatch({
+        type: SET_ALERT,
+        payload: { type: "success", msg: "Profile successfully edited" }
+      })
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data.profile
+      })
+
+      callback(res.data.profile)
+    }
+  } catch (err) {
+    const errors = err.response?.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR
+    });
+  }
+};
+
+export const editNormalUserProfile = (formData, callback) => async (dispatch) => {
+  try {
+    const res = await api.put('/profile/normalUser/edit', formData);
+
+    if (res.data?.profile) {
+      dispatch({
+        type: EDIT_PROFILE,
+        payload: res.data.profile
+      });
+      dispatch({
+        type: SET_ALERT,
+        payload: { type: "success", msg: "Profile successfully edited" }
+      })
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data.profile
+      })
+      callback(res.data.profile)
+    }
+  } catch (err) {
+    const errors = err.response?.data.errors;
 
     if (errors) {
       errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));

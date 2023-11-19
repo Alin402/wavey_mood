@@ -7,7 +7,10 @@ const {
     createArtistProfile,
     getArtistProfile,
     createNormalUserProfile,
-    getNormalUserProfile
+    getNormalUserProfile,
+    editArtistProfile,
+    editNormalUserProfile,
+    getArtistProfileView
 } = require("../controllers/profile");
 
 router.post('/artist', [
@@ -17,11 +20,23 @@ router.post('/artist', [
 
 router.get('/artist', protect, getArtistProfile);
 
+router.get("/artist/one/:artistId", protect, getArtistProfileView)
+
 router.post('/normalUser', [
   protect,
   body("username").notEmpty().withMessage("You must choose a username"),
 ], createNormalUserProfile)
 
 router.get('/normalUser', protect, getNormalUserProfile);
+
+router.put('/artist/edit', [
+  protect,
+  body("username").notEmpty().withMessage("You must choose a username"),
+], editArtistProfile)
+
+router.put('/normalUser/edit', [
+  protect,
+  body("username").notEmpty().withMessage("You must choose a username"),
+], editNormalUserProfile)
 
 module.exports = router;

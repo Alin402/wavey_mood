@@ -10,7 +10,7 @@
 }
 
 .plus-container {
-    background-color: white;
+    background-color: #1E1D1B;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,6 +24,6 @@
 .create-content {
     height: 20rem;
     width: 65px;
-    background-color: #000;
+    background-color: #1E1D1B;
     margin-bottom: 1rem;
 }

@@ -128,9 +128,105 @@ const getNormalUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
+const editArtistProfile = asyncHandler(async (req, res) => {
+    const { username, profilePhotoUrl, coverPhotoUrl, genres } = req.body;
+
+    const errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        let profile = await ArtistProfile.findOne({ userId: req.user.id });
+        if (!profile) {
+            return res.status(404).json({ errors: [{ msg: "Profile not found" }] });
+        }
+
+        profile.username = username;
+
+        if (profilePhotoUrl) {
+            profile.profilePhotoUrl = profilePhotoUrl
+        }
+
+        if (coverPhotoUrl) {
+            profile.coverPhotoUrl = coverPhotoUrl;
+        }
+
+        if (genres) {
+            profile.genres = genres;
+            genres.forEach((genre) => {
+                addNewGenre(genre, req.user.id);
+            })
+        }
+
+        await profile.save();
+
+        return res.status(200).json({ profile })
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
+const editNormalUserProfile = asyncHandler(async (req, res) => {
+    const { username, profilePhotoUrl, favoriteGenres } = req.body;
+
+    const errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        let profile = await UserProfile.findOne({ userId: req.user.id });
+        if (!profile) {
+            return res.status(404).json({ errors: [{ msg: "Profile not found" }] });
+        }
+
+        profile.username = username;
+
+        if (profilePhotoUrl) {
+            profile.profilePhotoUrl = profilePhotoUrl
+        }
+
+        if (favoriteGenres) {
+            profile.favoriteGenres = favoriteGenres;
+        }
+
+        await profile.save();
+
+        return res.status(200).json({ profile })
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
+const getArtistProfileView = asyncHandler(async (req, res) => {
+    try {
+        if (!req.params.artistId) {
+            return res.status(404).json({ errors: [{ msg: "Artist id not found" }] });
+        }
+        const artist = await ArtistProfile.findOne({ _id: req.params.artistId })
+        if (!artist) {
+            return res.status(404).json({ errors: [{ msg: "Artist not found" }] });
+        }
+        return res.status(200).json({ artist });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
 module.exports = {
     createArtistProfile,
     getArtistProfile,
     createNormalUserProfile,
-    getNormalUserProfile
+    getNormalUserProfile,
+    editArtistProfile,
+    editNormalUserProfile,
+    getArtistProfileView
 }

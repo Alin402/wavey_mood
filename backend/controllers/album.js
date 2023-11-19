@@ -20,7 +20,7 @@ const createAlbum = asyncHandler(async (req, res) => {
             return res.status(404).json({ errors: [{ msg: "Profile not found" }] });
         }
 
-        let album = { name, profileId: profile._id }
+        let album = { name, profileId: profile._id, artistName: profile.username }
 
         if (coverPhotoUrl) {
             album = { ...album, coverPhotoUrl };
@@ -145,10 +145,24 @@ const deleteAlbum = asyncHandler(async (req, res) => {
     }
 })
 
+const getAlbumsView = asyncHandler(async (req, res) => {
+    try {
+        if (!req.params.profileId) {
+            return res.status(404).json({ errors: [{ msg: "Profile id not found" }] });
+        }
+        const albums = await Album.find({ profileId: req.params.profileId })
+        return res.status(200).json({ albums });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
 module.exports = {
     createAlbum,
     getAllAlbums,
     getAlbum,
     uploadSong,
-    deleteAlbum
+    deleteAlbum,
+    getAlbumsView
 }

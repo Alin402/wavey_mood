@@ -37,3 +37,5 @@ export const SET_CURRENT_SONG = "SET_CURRENT_SONG";
 export const GET_CURRENT_SONG = "GET_CURRENT_SONG";
 export const ADD_SONG_IN_QUEUE = "ADD_SONG_IN_QUEUE";
 export const SET_QUEUE = "SET_QUEUE";
+
+export const EDIT_PROFILE = "EDIT_PROFILE";

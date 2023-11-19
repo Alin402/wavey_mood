@@ -25,7 +25,7 @@ const ArtistProfile = ({ user }) => {
 
     useEffect(() => {
         if (user?.hasProfile) {
-            dispatch(getArtistProfile());
+            dispatch(getArtistProfile((profile) => {}));
         }
     }, [hasProfile])
 
@@ -94,26 +94,27 @@ const ArtistProfile = ({ user }) => {
             {
                 (user.hasProfile && !loadingProfile) || (hasProfile) ? 
                 <div className="created-profile">
-                    {
-                        !profile.coverPhotoUrl ?
-                        (
-                            <div className="missing-cover-photo retro-style" style={{ width: "100%", backgroundColor: "#d3d3d3" }}>
-                                <label htmlFor="coverPhotoUrl" style={{ cursor: "pointer" }}>
-                                    <PhotoIcon size={150} color={"#A9A9A9"} />
-                                </label>
+                    <div className="profile-header">
+                        {
+                            !profile.coverPhotoUrl ?
+                            (
+                                <div className="missing-cover-photo retro-style" style={{ width: "100%", backgroundColor: "#d3d3d3" }}>
+                                    <label htmlFor="coverPhotoUrl" style={{ cursor: "pointer" }}>
+                                        <PhotoIcon size={150} color={"#A9A9A9"} />
+                                    </label>
+                                </div>
+                            ) :
+                            <img
+                                className="cover-photo-img"
+                                src={profile.coverPhotoUrl}
+                            />
+                        }
+                            <div className="profile-image-container">
+                                <ProfileImage 
+                                    imageUrl={profile.profilePhotoUrl}
+                                    username={profile.username}
+                                />
                             </div>
-                        ) :
-                        <img
-                            className="cover-photo-img"
-                            src={profile.coverPhotoUrl}
-                        />
-                    }
-                    {<h2>Followers: {profile.noFollowers}</h2>}
-                    <div className="margin-top">
-                        <ProfileImage 
-                            imageUrl={profile.profilePhotoUrl}
-                            username={profile.username}
-                        />
                     </div>
 
                     <div className="genres-container">
@@ -127,7 +128,7 @@ const ArtistProfile = ({ user }) => {
                             })
                         }
                     </div>
-                    <div style={{ marginTop: "2rem", width: "100%" }}>
+                    <div>
                         <AlbumList />
                     </div>
                 </div> :

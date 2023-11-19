@@ -24,7 +24,7 @@ const album = (state = initialState, action) => {
       case GET_ALBUM:
         return { ...state, loading: false, album: payload }
       case DELETE_ALBUM:
-        return { ...state, loading: false, albums: state.albums.filter((album) => album.id !== payload.id) }
+        return { ...state, loading: false, albums: state.albums.filter((a) => a._id !== payload._id) }
       default:
         return state;
     }

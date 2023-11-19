@@ -1,5 +1,5 @@
 .landing-profile {
-    width: 70%;
+    width: 100%;
     height: 100%;
 }
 
@@ -13,7 +13,6 @@
     height: 20rem;
     background-color: #D3D3D3;
     border-radius: 5px;
-    margin-top: 2rem;
     border: solid black 3px;
 }
 
@@ -27,7 +26,7 @@
 
 .cover-photo-img {
     width: 100%;
-    height: 20rem;
+    height: 30rem;
     border-radius: 5px;
 }
 
@@ -37,7 +36,6 @@
 
 .form-profile-container {
     display: flex;
-    margin-top: 2rem;
     justify-content: space-between;
 }
 
@@ -56,9 +54,11 @@
 }
 
 .genres-container {
-    width: 30rem;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
+    justify-content: right;
+    margin-top: 1rem;
 }
 
 .genre {
@@ -66,9 +66,11 @@
     border: solid black 3px;
     border-radius: 5px;
     display: inline;
-    font-size: 2em;
-    font-weight: 700;
+    font-size: 1.8em;
+    font-weight: 600;
     margin: .5rem;
+    color: #fff;
+    background-color: #1E1D1B;
 }
 
 .submit-div {
@@ -94,7 +96,6 @@
 } 
 
 .created-profile {
-    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -112,7 +113,8 @@
 }
 
 .profile-image-username {
-    font-size: 4em;
+    font-size: 3.5em;
+    color: #fff;
 }
 
 .genres-containe {
@@ -132,4 +134,18 @@
     margin: .2rem 0;
     display: flex;
     justify-content: space-between;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.profile-image-container {
+    background-color: #1E1D1B;
+    width: 35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

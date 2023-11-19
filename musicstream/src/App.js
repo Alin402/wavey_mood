@@ -6,6 +6,7 @@ import MainView from "./components/views/main/MainView";
 import SignUpView from "./components/views/signup/SignUpView";
 import AlbumView from "./components/views/album/AlbumView";
 import LogInView from "./components/views/signup/LogInView"
+import EditProfileView from "./components/views/profile/EditProfileView";
 import Navigation from "./components/navigation/Navigation";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/routing/ProtectedRoute";
@@ -22,6 +23,7 @@ import { IoMusicalNotes as SongIcon } from "react-icons/io5";
 import Modal from "./components/generic/modal/Modal";
 import AddAlbumForm from "./components/album/add-album/AddAlbumForm";
 import SongUpload from "./components/songs/song-upload/SongUpload";
+import ArtistView from "./components/views/artist/ArtistView";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -68,12 +70,20 @@ const App = () => {
             element={<PrivateRoute component={ProfileView} />}
           />
           <Route
+            path="profile/edit"
+            element={<PrivateRoute component={EditProfileView} />}
+          />
+          <Route
             path="main"
             element={<PrivateRoute component={MainView} />}
           />
           <Route
             path="/album/:albumId"
             element={<PrivateRoute component={AlbumView} />}
+          />
+          <Route
+            path="/artist/:artistId"
+            element={<PrivateRoute component={ArtistView} />}
           />
         </Routes>
       </div>
@@ -111,7 +121,7 @@ const App = () => {
           </Create>
 
           <Modal
-            color={"#f58021"}
+            color={"#ef5aa0"}
             open={openAlbumModal}
             setOpen={setOpenAlbumModal}
           >
@@ -121,7 +131,7 @@ const App = () => {
           </Modal>
 
           <Modal
-            color={"#f58021"}
+            color={"#ef5aa0"}
             open={openSongModal}
             setOpen={setOpenSongModal}
           >

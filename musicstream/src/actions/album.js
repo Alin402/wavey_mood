@@ -87,15 +87,21 @@ export const uploadSong = (formData, navigate, setOpenModal) => async (dispatch)
   }
 };
 
-export const deleteAlbum = (albumId) => async (dispatch) => {
+export const deleteAlbum = (albumId, callback) => async (dispatch) => {
   try {
     const res = await api.delete(`/album/del/${albumId}`);
 
     if (res.data?.album) {
       dispatch({
         type: DELETE_ALBUM,
-        payload: res.data?.album
+        payload: res.data.album
       });
+      dispatch({
+        type: SET_ALERT,
+        payload: { type: "success", msg: "Album successfully deleted" }
+      })
+
+      callback();
     }
   } catch (err) {
     const errors = err.response.data.errors;
