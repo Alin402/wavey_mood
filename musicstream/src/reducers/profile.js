@@ -2,7 +2,8 @@ import {
     CREATE_PROFILE,
     GET_PROFILE,
     PROFILE_ERROR,
-    LOGOUT
+    LOGOUT,
+    EDIT_PROFILE
 } from "../actions/types";
 
 const initialState = {
@@ -14,7 +15,7 @@ const profile = (state = initialState, action) => {
     const { type, payload } = action;
   
     switch (type) {
-      case CREATE_PROFILE:
+      case CREATE_PROFILE, EDIT_PROFILE:
         return { profile: payload, loading: false };
       case GET_PROFILE:
         return { profile: payload, loading: false }

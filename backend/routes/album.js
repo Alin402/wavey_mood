@@ -4,15 +4,30 @@ const { protect } = require('../middleware/auth');
 const { body } = require("express-validator");
 const {
     createAlbum,
-    getAllAlbums
+    getAllAlbums,
+    uploadSong,
+    getAlbum,
+    deleteAlbum,
+    getAlbumsView
 } = require("../controllers/album");
+const { uploadFile } = require("../utils/uploadFile");
 
 router.post('/', [
+    protect,
     body("name").notEmpty().withMessage("You must choose a name for the album"),
   ], createAlbum)
 
-//router.get('/:albumId', protect, getAlbum);
+router.get('/one/:albumId', protect, getAlbum);
 
 router.get('/all', protect, getAllAlbums);
+
+router.get("/view/:profileId", protect, getAlbumsView)
+
+router.post("/uploadSong", [
+  protect,
+  uploadFile.single("file")
+], uploadSong)
+
+router.delete("/del/:albumId", protect, deleteAlbum);
 
 module.exports = router;

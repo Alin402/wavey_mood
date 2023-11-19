@@ -13,10 +13,22 @@ const albumSchema = mongoose.Schema(
     coverPhotoUrl: {
       type: String,
     },
+    artistName: {
+      type: String,
+      required: true
+    },
     songs: [
       {
         albumId: {
           type:  mongoose.Schema.Types.ObjectId,
+          required: true
+        },
+        albumName: {
+          type: String,
+          required: true
+        },
+        artistName: {
+          type: String,
           required: true
         },
         name: {

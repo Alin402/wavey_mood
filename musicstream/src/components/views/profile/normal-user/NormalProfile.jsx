@@ -25,7 +25,7 @@ const NormalProfile = ({ user }) => {
 
     useEffect(() => {
         if (user?.hasProfile) {
-            dispatch(getNormalUserProfile());
+            dispatch(getNormalUserProfile((profile) => {}));
         }
     }, [hasProfile])
 

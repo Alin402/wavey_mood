@@ -13,18 +13,18 @@ const Create = ({ children, open, setOpen }) => {
             }
             <div 
                 className="plus-container retro-style" 
-                style={{ width: "65px", height: "65px", backgroundColor: open ? "#ef5aa0" : "white" }}
+                style={{ width: "65px", height: "65px", backgroundColor: open ? "#fff" : "#1E1D1B" }}
                 onClick={() => { setOpen(!open) }}
             >
                 {
                     open ? 
                     <CloseIcon 
                         size={55} 
-                        color={"#fff"}
+                        color={"#1E1D1B"}
                     /> :
                     <PlusIcon 
                         size={40} 
-                        color={"#000"}
+                        color={"#fff"}
                     />
                 }
             </div>

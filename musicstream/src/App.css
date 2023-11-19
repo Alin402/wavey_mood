@@ -185,10 +185,6 @@ Resources
     border-radius: 5px;
 }
 
-.margin-top {
-    margin-top: 1rem;
-}
-
 .add-album-container {
     display: flex;
     flex-direction: column;
@@ -205,4 +201,20 @@ Resources
 
 .add-album-icons:hover {
     color: #ef5aa0;
+}
+
+.btn-delete {
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 1.3em;
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.btn-edit {
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 1.3em;
+    padding: .5rem;
+    cursor: pointer;
 }

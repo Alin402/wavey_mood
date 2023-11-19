@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../Profile.css";
 import { AiFillPlusSquare as PlusIcon } from "react-icons/ai";
 import { MdCancel as CancelIcon } from "react-icons/md";
-import api from "../../../../utils/api";
+import {api } from "../../../../utils/api";
 
 const SearchGenres = ({ addGenre, removeGenre, favoriteGenres }) => {
     const [field, setField] = useState("");

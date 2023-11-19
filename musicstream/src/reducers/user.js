@@ -6,7 +6,8 @@ import {
     LOGIN_SUCCESS,
     //LOGIN_FAIL,
     LOGOUT,
-    ACCOUNT_DELETED
+    ACCOUNT_DELETED,
+    CREATE_PROFILE
   } from '../actions/types';
   import setAuthToken from '../utils/setAuthToken';
   
@@ -48,6 +49,16 @@ import {
           loading: false,
           user: null
         };
+      case CREATE_PROFILE: 
+        return {
+          ...state,
+          user: {
+            user: {
+              ...state.user.user,
+              hasProfile: true
+            }
+          }
+        }
       default:
         return state;
     }

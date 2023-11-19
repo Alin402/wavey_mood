@@ -1,0 +1,24 @@
+.landing-main {
+    width: 80%;
+}
+
+.search-input {
+    width: 60rem;
+}
+
+.search-input-container {
+    display: flex;
+}
+
+.search-select {
+    width: 12rem;
+    margin-left: 1rem;
+}
+
+.results-container {
+    width: 50rem;
+    background-color: #ef5aa0;
+    position: fixed;
+    max-height: 40rem;
+    overflow-y: scroll;
+}

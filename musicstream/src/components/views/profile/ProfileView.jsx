@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import {useSelector} from "react-redux";
 import NormalProfile from "./normal-user/NormalProfile";
 import ArtistProfile from "./artist/ArtistProfile";
-import Modal from "../../generic/modal/Modal";
 
 const ProfileView = () => {
     const user = useSelector((state) => state.user.user.user);
