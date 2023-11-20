@@ -43,7 +43,7 @@ const AddAlbumForm = ({ setOpenAlbumModal }) => {
 
             <div className="form-group">
                 <label className="form-label" htmlFor="name">name of the album</label>
-                <input className="form-input" id="name" name="name" onChange={(e) => handleNameChange(e)}></input>
+                <input autoFocus className="form-input" id="name" name="name" onChange={(e) => handleNameChange(e)}></input>
             </div>
             <div className="retro-style album-cover-photo">
                 <label htmlFor="coverAlbumPhotoUrl" style={{ cursor: "pointer" }}>

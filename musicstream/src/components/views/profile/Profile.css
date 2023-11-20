@@ -4,8 +4,9 @@
 }
 
 .artist-profile {
-    width: 100%;
+    width: 70%;
     min-height: 20rem;
+    margin: 2rem auto;
 }
 
 .cover-photo {
@@ -57,7 +58,7 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: right;
+    justify-content: center;
     margin-top: 1rem;
 }
 
@@ -97,8 +98,11 @@
 
 .created-profile {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    width: 60%;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ef5aa0;
 }
 
 .profile-image-image {
@@ -123,13 +127,14 @@
     flex-wrap: wrap;
 }
 
-.results-container {
+.results-container-genre {
     display: flex;
     flex-direction: column;
 }
 
-.result {
-    width: 100%;
+.result-genre {
+    overflow: hidden;
+    width: 20rem;
     padding: .2rem;
     margin: .2rem 0;
     display: flex;
@@ -148,4 +153,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.created-profile-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 30rem;
+}
+
+.normal-profile-container {
+    width: 100%;
 }

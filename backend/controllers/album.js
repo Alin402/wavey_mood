@@ -158,11 +158,27 @@ const getAlbumsView = asyncHandler(async (req, res) => {
     }
 })
 
+const getLatestAlbums = asyncHandler(async (req, res) => {
+    try {
+        const albums = await Album.find().sort("-createdAt").limit(5);
+
+        if (!albums) {
+            return res.status(404).json({ errors: [{ msg: "Albums not found" }] });
+        }
+
+        return res.status(200).json({ albums });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
 module.exports = {
     createAlbum,
     getAllAlbums,
     getAlbum,
     uploadSong,
     deleteAlbum,
-    getAlbumsView
+    getAlbumsView,
+    getLatestAlbums
 }

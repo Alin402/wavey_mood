@@ -40,7 +40,32 @@ const searchSong = asyncHandler(async (req, res) => {
             songs = [...songs, ...album.songs];
         })
 
-        return res.status(200).json({ songs })
+        let filteredSongs = songs.filter((song) => {
+            return song.name.toLowerCase().includes(field.toLowerCase());
+        })
+
+        return res.status(200).json({ songs: filteredSongs })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
+const searchArtist = asyncHandler(async (req, res) => {
+    try {
+        const field = req.params.field;
+
+        if (!field) {
+            return res.status(400).json({ errors: [ { msg: "No search field found" } ] });
+        }
+
+        const artists = await ArtistProfile.find();
+
+        let filteredArtists = artists.filter((artist) => {
+            return artist.username.toLowerCase().includes(field.toLowerCase());
+        })
+
+        return res.status(200).json({ artists: filteredArtists })
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: "Server error" });
@@ -49,5 +74,6 @@ const searchSong = asyncHandler(async (req, res) => {
 
 module.exports = {
     searchAlbum,
-    searchSong
+    searchSong,
+    searchArtist
 }

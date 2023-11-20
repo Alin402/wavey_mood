@@ -42,6 +42,8 @@ import {
       case AUTH_ERROR:
       case LOGOUT:
         localStorage.removeItem("token")
+        localStorage.removeItem("songQueue");
+        localStorage.removeItem("recentlyViewed");
         return {
           ...state,
           token: null,

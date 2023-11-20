@@ -39,3 +39,4 @@ export const ADD_SONG_IN_QUEUE = "ADD_SONG_IN_QUEUE";
 export const SET_QUEUE = "SET_QUEUE";
 
 export const EDIT_PROFILE = "EDIT_PROFILE";
+export const FOLLOW_ARTIST = "FOLLOW_ARTIST";

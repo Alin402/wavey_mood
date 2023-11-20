@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 import { useDispatch } from "react-redux";
 import { logout } from "../../actions/user";
 import ProfileDropDown from "./ProfileNav";
+import navlogo from "./logov2_white.svg";
 
 const Navigation = () => {
     const user = useSelector((state) => state.user);
@@ -16,7 +17,7 @@ const Navigation = () => {
                 user.isAuthenticated ? (
                     <>
                         <NavLink to="/main">
-                            <img src="img/logov2_white.svg" className="logo-img-nav" />
+                            <img src={navlogo} className="logo-img-nav" />
                         </NavLink>
                         <div className="nav-auth">
                             <NavLink to="/main" className="nav-item">

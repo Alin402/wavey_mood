@@ -34,20 +34,15 @@ const Album = ({ album, inDeleteMode, setInDeleteMode, showArtist }) => {
                         <DeleteIcon size={40} color={"#b90e0a"} onClick={handleOpenDeleteModal} />
                     </div>
                 }
-                {
-                    !album.coverPhotoUrl?
-                    <>
-                        <PhotoIcon size={60} color={"#fff"} />
-                    </> :
-                    <img className="album-cover" src={album.coverPhotoUrl} />
-                }
+               <div className="followed-artist-profile-image retro-style" style={{ backgroundImage: `url(${album.coverPhotoUrl})` }}></div>
                 <div>
-                    <Link to={`/album/${album._id}`} className="album-link">
-                        <h2 style={{ marginTop: "1rem" }}>{album.name}</h2>
-                    </Link>
+                    <div style={{ marginLeft: "1rem" }}>
+                        <Link to={`/album/${album._id}`} className="album-link">
+                            <h2 style={{ marginTop: "1rem" }}>{album.name}</h2>
+                        </Link>
+                    </div>
                     {
-                        showArtist &&
-                        <p style={{ color: "#fff" }}>{album.artistName}</p>
+                        <p style={{ color: "#fff", marginLeft: "1rem" }}>{album.artistName}</p>
                     }
                 </div>
             </div>

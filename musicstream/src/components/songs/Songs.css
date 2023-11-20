@@ -11,14 +11,16 @@
 .song {
     margin: 1rem 0;
     padding: .5rem 1rem;
-    background-color: #f58021;
+    background-color: #1E1D1B;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
 
 .song-title {
-    font-size: 3em;
+    font-size: 2em;
+    color: #fff;
 }
 
 .play-icon {
