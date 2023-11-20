@@ -94,13 +94,19 @@ const ArtistProfile = ({ user }) => {
 
     return user && user.hasProfile && (
         <div className="artist-profile">
-            <div className="cover-photo">
-                {
-                    !formData.coverPhotoUrl ?
-                    <div className="missing-cover-photo">
                         <label htmlFor="coverPhotoUrl" style={{ cursor: "pointer" }}>
-                        <PhotoIcon size={150} color={"#A9A9A9"} />
-                        <h2>Please select a cover photo</h2>
+                            <div 
+                                className="cover-photo"
+                                style={{ backgroundImage: `url(${formData.coverPhotoUrl})` }}
+                            >
+                                {
+                                    !formData.coverPhotoUrl &&
+                                    <div className="missing-cover-photo">
+                                        <PhotoIcon size={150} color={"#A9A9A9"} />
+                                        <h2>Please select a cover photo</h2>
+                                    </div>
+                                }
+                            </div>
                         </label>
                         <input 
                             accept="image/*"
@@ -110,53 +116,46 @@ const ArtistProfile = ({ user }) => {
                             id="coverPhotoUrl"
                             onChange={(e) => handleCoverPhotoChange(e)}
                         />
-                        </div> :
-                        <img
-                            className="cover-photo-img"
-                            src={formData.coverPhotoUrl}
-                        />
-                }
-            </div>
-            <div className="form-profile-container">
-                <div className="form-profile-forms">
-                    <ArtistProfileForm
-                        username={formData.username}
-                        handleUsernameChange={handleUsernameChange}
-                    />
-                    </div>
-                    <div>
-                        <div className="submit-div">
-                            <div className="form-group">
-                                <label htmlFor="profilePhotoUrl" style={{ cursor: "pointer" }}>
-                                    <ImageUpload
-                                        image={formData.profilePhotoUrl}
-                                    />
-                                <p className="form-label">choose a profile picture</p>
-                                </label>
-                                <input 
-                                    accept="image/*"
-                                    style={{ display: "none" }} 
-                                    type="file" 
-                                    name="profilePhotoUrl" 
-                                    id="profilePhotoUrl"
-                                    onChange={(e) => handleProfilePhotoChange(e)}
+                        <div className="form-profile-container" style={{ marginTop: "2rem" }}>
+                            <div className="form-profile-forms">
+                                <ArtistProfileForm
+                                    username={formData.username}
+                                    handleUsernameChange={handleUsernameChange}
+                                />
+                            </div>
+                            <div>
+                                <div className="submit-div">
+                                    <div className="form-group">
+                                        <label htmlFor="profilePhotoUrl" style={{ cursor: "pointer" }}>
+                                            <ImageUpload
+                                                image={formData.profilePhotoUrl}
+                                            />
+                                            <p className="form-label">choose a profile picture</p>
+                                        </label>
+                                        <input 
+                                            accept="image/*"
+                                            style={{ display: "none" }} 
+                                            type="file" 
+                                            name="profilePhotoUrl" 
+                                            id="profilePhotoUrl"
+                                            onChange={(e) => handleProfilePhotoChange(e)}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="retro-style submit-profile" onClick={submitProfile}>
+                                    <h2>edit profile</h2>
+                                </div>
+                            </div>
+                            <div className="form-profile-forms">
+                                <ArtistProfileGenres
+                                    genres={formData.genres}
+                                    addGenre={addGenre}
+                                    removeGenre={removeGenre}
                                 />
                             </div>
                         </div>
-
-                        <div className="retro-style submit-profile" onClick={submitProfile}>
-                            <h2>edit profile</h2>
-                        </div>
                     </div>
-                    <div className="form-profile-forms">
-                        <ArtistProfileGenres
-                            genres={formData.genres}
-                            addGenre={addGenre}
-                            removeGenre={removeGenre}
-                        />
-                    </div>
-                </div>
-        </div>
     )
 }
 

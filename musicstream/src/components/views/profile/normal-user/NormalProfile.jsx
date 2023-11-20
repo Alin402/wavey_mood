@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProfileImage from "../profile-image/ProfileImage";
 import SearchGenres from "./SearchGenres";
+import { NavLink } from "react-router-dom";
+import FollowedArtists from "../../main/FollowedArtists";
 
 const NormalProfile = ({ user }) => {
     const dispatch = useDispatch();
@@ -81,26 +83,56 @@ const NormalProfile = ({ user }) => {
         <div className="artist-profile">
             {
                 (user.hasProfile && !loadingProfile) || (hasProfile) ? 
-                <div className="created-profile">
-                    <div className="margin-top">
-                        <ProfileImage 
-                            imageUrl={profile.profilePhotoUrl}
-                            username={profile.username}
-                        />
-                    </div>
+                <div className="normal-profile-container">
+                    <div className="created-profile retro-style">
+                        <div className="margin-top">
+                            <div 
+                                className="retro-style profile-image"
+                                style={{
+                                    backgroundImage: `url(${profile.profilePhotoUrl})`,
+                                    backgroundColor: "#d3d3d3"
+                                }}
+                            >
+                                {
+                                    !profile.profilePhotoUrl &&
+                                    <div className="center">
+                                        <PhotoIcon size={100} />
+                                    </div>    
+                                }
+                            </div>
+                        </div>
 
-                    <div className="genres-container">
-                        {
-                            profile.favotiteGenres?.length !== 0 && profile.favoriteGenres?.map((genre, index) => {
-                                return (
-                                    <div className="genre" key={index}>
-                                        {genre}
-                                    </div>
-                                )
-                            })
-                        }
+                        <div className="created-profile-right">
+                            <div>
+                                <h2 className="username-title">{profile.username}</h2>
+                            </div>   
+                            <div className="genres-container" style={{ marginBottom: "1rem" }}>
+                                {
+                                    profile.favotiteGenres?.length !== 0 && profile.favoriteGenres?.map((genre, index) => {
+                                        return (
+                                            <div className="genre" key={index}>
+                                                {genre}
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div>
+                                {
+                                    user?.hasProfile &&
+                                    <NavLink to="/profile/edit" >
+                                        <button className="retro-style btn-edit">Edit profile</button>
+                                    </NavLink>
+                                }
+                        </div>
+
                     </div>
-                </div> :
+                </div>
+                    <div style={{ width: "60%", margin: "2rem auto" }}>
+                        <FollowedArtists />
+                    </div>
+                </div>
+                :
                 (
                     <>
                         <div className="form-profile-container">

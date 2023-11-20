@@ -25,7 +25,7 @@ const AlbumList = () => {
     return loadingAlbums ?
     <h2>loading...</h2>
     : (
-        <div className="album-list" style={{ marginBottom: "2rem" }}>
+        <div>
             <button className="btn-delete retro-style" style={{ backgroundColor: inDeleteMode ? "#b90e0a" : "#ef5aa0", marginRight: ".5rem" }} onClick={toggleDeleteMode}>
                 {
                     inDeleteMode ?
@@ -33,32 +33,29 @@ const AlbumList = () => {
                     "Delete an album"
                 }
             </button>
-            {
-                user?.hasProfile &&
-                <NavLink to="/profile/edit" >
-                    <button className="retro-style btn-edit">Edit profile</button>
-                </NavLink>
-            }
-            {
-                albums.length === 0 ?
-                <h2>no albums to display...</h2> :
-                (
-                    <div className="album-list-container">
-                        {
-                            albums?.map((album, index) => {
-                                return (
-                                    <Album 
-                                        key={index}
-                                        album={album}
-                                        inDeleteMode={inDeleteMode}
-                                        setInDeleteMode={setInDeleteMode}
-                                    />
-                                )
-                            })
-                        }
-                    </div>
-                )
-            }
+            <div className="album-list" style={{ marginBottom: "2rem" }}>
+                {
+                    albums.length === 0 ?
+                    <h2>no albums to display...</h2> :
+                    
+                    (
+                        <div className="album-list-container">
+                            {
+                                albums?.map((album, index) => {
+                                    return (
+                                        <Album 
+                                            key={index}
+                                            album={album}
+                                            inDeleteMode={inDeleteMode}
+                                            setInDeleteMode={setInDeleteMode}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    )
+                }
+            </div>
         </div>
     )
 }

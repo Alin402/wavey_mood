@@ -12,6 +12,7 @@ import {
     loadUser
 } from "../../../../actions/user";
 import AlbumList from "../../../album/album-list/AlbumList";
+import { NavLink } from "react-router-dom";
 
 const ArtistProfile = ({ user }) => {
     const dispatch = useDispatch();
@@ -92,72 +93,91 @@ const ArtistProfile = ({ user }) => {
     return (
         <div className="artist-profile">
             {
-                (user.hasProfile && !loadingProfile) || (hasProfile) ? 
-                <div className="created-profile">
-                    <div className="profile-header">
+                (user.hasProfile && !loadingProfile) || (hasProfile) ?
+                <div>
+                    <div
+                        className="cover-photo"
+                        style={{ backgroundImage: `url(${profile.coverPhotoUrl})` }}
+                    >
                         {
-                            !profile.coverPhotoUrl ?
-                            (
-                                <div className="missing-cover-photo retro-style" style={{ width: "100%", backgroundColor: "#d3d3d3" }}>
-                                    <label htmlFor="coverPhotoUrl" style={{ cursor: "pointer" }}>
-                                        <PhotoIcon size={150} color={"#A9A9A9"} />
-                                    </label>
-                                </div>
-                            ) :
-                            <img
-                                className="cover-photo-img"
-                                src={profile.coverPhotoUrl}
-                            />
-                        }
-                            <div className="profile-image-container">
-                                <ProfileImage 
-                                    imageUrl={profile.profilePhotoUrl}
-                                    username={profile.username}
-                                />
+                            !profile.coverPhotoUrl &&
+                            <div className="missing-cover-photo">
+                                <PhotoIcon size={150} color={"#A9A9A9"} />
                             </div>
-                    </div>
-
-                    <div className="genres-container">
-                        {
-                            profile.genres?.length !== 0 && profile.genres?.map((genre, index) => {
-                                return (
-                                    <div className="genre" key={index}>
-                                        {genre}
-                                    </div>
-                                )
-                            })
                         }
                     </div>
-                    <div>
+                    <div className="created-profile retro-style" style={{ marginTop: "2rem" }}>
+                        <div className="margin-top">
+                            <div 
+                                className="retro-style profile-image"
+                                style={{
+                                    backgroundImage: `url(${profile.profilePhotoUrl})`,
+                                    backgroundColor: "#d3d3d3"
+                                }}
+                            >
+                                {
+                                    !profile.profilePhotoUrl &&
+                                    <div className="center">
+                                        <PhotoIcon size={100} />
+                                    </div>    
+                                }
+                            </div>
+                        </div>
+
+                        <div className="created-profile-right">
+                            <div>
+                                <h2 className="username-title">{profile.username}</h2>
+                            </div>   
+                            <div className="genres-container" style={{ marginBottom: "1rem" }}>
+                                {
+                                    profile.favotiteGenres?.length !== 0 && profile.genres?.map((genre, index) => {
+                                        return (
+                                            <div className="genre" key={index}>
+                                                {genre}
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div>
+                                {
+                                    user?.hasProfile &&
+                                    <NavLink to="/profile/edit" >
+                                        <button className="retro-style btn-edit">Edit profile</button>
+                                    </NavLink>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div style={{ marginTop: "2rem" }}>
                         <AlbumList />
                     </div>
                 </div> :
                 (
                     <>
-                        <div className="cover-photo">
-                            {
-                                !previewCoverPhoto ?
+                        <label htmlFor="coverPhotoUrl" style={{ cursor: "pointer" }}>
+                            <div
+                                className="cover-photo"
+                                style={{ backgroundImage: `url(${previewCoverPhoto})` }}
+                            >
+                                {
+                                    !previewCoverPhoto &&
                                     <div className="missing-cover-photo">
-                                        <label htmlFor="coverPhotoUrl" style={{ cursor: "pointer" }}>
-                                            <PhotoIcon size={150} color={"#A9A9A9"} />
-                                            <h2>Please select a cover photo</h2>
-                                        </label>
-                                        <input 
-                                            accept="image/*"
-                                            style={{ display: "none" }} 
-                                            type="file" 
-                                            name="coverPhotoUrl" 
-                                            id="coverPhotoUrl"
-                                            onChange={(e) => handleCoverPhotoChange(e)}
-                                        />
-                                    </div> :
-                                    <img
-                                        className="cover-photo-img"
-                                        src={previewCoverPhoto}
-                                    />
-                            }
-                        </div>
-                        <div className="form-profile-container">
+                                        <PhotoIcon size={150} color={"#A9A9A9"} />
+                                        <h2>Please select a cover photo</h2>
+                                    </div>
+                                }
+                            </div>
+                        </label>
+                        <input 
+                            accept="image/*"
+                            style={{ display: "none" }} 
+                            type="file" 
+                            name="coverPhotoUrl" 
+                            id="coverPhotoUrl"
+                            onChange={(e) => handleCoverPhotoChange(e)}
+                        />
+                        <div className="form-profile-container" style={{ marginTop: "2rem" }}>
                             <div className="form-profile-forms">
                                 <ArtistProfileForm
                                     username={formData.username}

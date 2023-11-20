@@ -8,6 +8,7 @@ import { setAlert } from "../../../actions/alert";
 import { BiSolidPhotoAlbum as PhotoIcon } from "react-icons/bi";
 import ProfileImage from "../profile/profile-image/ProfileImage";
 import AlbumListView from "../../album/album-list/AlbumListView";
+import { followArist } from "../../../actions/profile";
 
 const ArtistView = () => {
     const location = useLocation();
@@ -42,55 +43,68 @@ const ArtistView = () => {
         getProfile();
     }, [])
 
+    const handleFollowArist = () => {
+        dispatch(followArist(profile._id, (profile) => {}))
+    }
+
     return !profile ?
     <h2>loading...</h2> :
      (
-        <div className="created-profile">
-            <div className="profile-header">
-                {
-                    !profile.coverPhotoUrl ?
-                    (
-                        <div className="missing-cover-photo retro-style" style={{ width: "100%", backgroundColor: "#d3d3d3" }}>
-                            <label htmlFor="coverPhotoUrl" style={{ cursor: "pointer" }}>
+        <div style={{ marginTop: "7rem" }}>
+                <div
+                    className="cover-photo"
+                    style={{ backgroundImage: `url(${profile.coverPhotoUrl})` }}
+                >
+                        {
+                            !profile.coverPhotoUrl &&
+                            <div className="missing-cover-photo">
                                 <PhotoIcon size={150} color={"#A9A9A9"} />
-                            </label>
-                        </div>
-                    ) :
-                    <img
-                        className="cover-photo-img"
-                        src={profile.coverPhotoUrl}
-                    />
-                }
-                    <div className="profile-image-container">
-                        <ProfileImage 
-                            imageUrl={profile.profilePhotoUrl}
-                            username={profile.username}
-                        />
-                    </div>
-
-                    {
-                            !user?.isArtist &&
-                            <button className="btn-delete">follow</button>
-                        }
-            </div>
-
-            <div className="genres-container">
-                {
-                    profile.genres?.length !== 0 && profile.genres?.map((genre, index) => {
-                        return (
-                            <div className="genre" key={index}>
-                                {genre}
                             </div>
-                        )
-                    })
-                }
-            </div>
-            <div>
-                <AlbumListView
-                    profile={profile}
-                />
-            </div>
-        </div>
+                        }
+                    </div>
+                    <div className="created-profile retro-style" style={{ marginTop: "2rem" }}>
+                        <div className="margin-top">
+                            <div 
+                                className="retro-style profile-image"
+                                style={{
+                                    backgroundImage: `url(${profile.profilePhotoUrl})`,
+                                    backgroundColor: "#d3d3d3"
+                                }}
+                            >
+                                {
+                                    !profile.profilePhotoUrl &&
+                                    <div className="center">
+                                        <PhotoIcon size={100} />
+                                    </div>    
+                                }
+                            </div>
+                        </div>
+
+                        <div className="created-profile-right">
+                            <div>
+                                <h2 className="username-title">{profile.username}</h2>
+                            </div>   
+                            <div className="genres-container" style={{ marginBottom: "1rem" }}>
+                                {
+                                    profile.favotiteGenres?.length !== 0 && profile.genres?.map((genre, index) => {
+                                        return (
+                                            <div className="genre" key={index}>
+                                                {genre}
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            {
+                                !user.isArtist &&
+                                <button className="btn-delete retro-style" onClick={handleFollowArist}>follow</button>
+                            }
+                        </div>
+                    </div>
+                    <div style={{ marginTop: "2rem" }}>
+                        <AlbumListView profile={profile} />
+                    </div>
+                </div>
     )
 }
 

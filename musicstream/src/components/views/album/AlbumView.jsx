@@ -8,6 +8,7 @@ import {
 import { api } from "../../../utils/api";
 import { setAlert } from "../../../actions/alert";
 import Album from "../../album/album/Album";
+import { addToRecentlyViewed } from "../../../utils/addToRecentlyViewed";
 
 const AlbumView = () => {
     const location = useLocation();
@@ -27,6 +28,7 @@ const AlbumView = () => {
                 const res = await api.get(`/album/one/${substring}`)
                 if (res.data?.album) {
                     setAlbum(res.data.album);
+                    addToRecentlyViewed(res.data?.album);
                 }
             } catch (err) {
                 const errors = err.response?.data.errors;

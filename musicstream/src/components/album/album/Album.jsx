@@ -48,19 +48,21 @@ const Album = ({ album }) => {
     return (
         <>
             <div className="album-container">
-                <div className="album-header">
+                <div className="album-header retro-style">
                     <div>
                         {
-                            album.coverPhotoUrl ?
-                            <img className="album-cover-picture" src={album.coverPhotoUrl} /> :
-                            <div className="missing-album-picture retro-style">
-                                <AlbumIcon size={100} />
+                            <div className="missing-album-picture retro-style"
+                            style={{ backgroundImage: `url(${album.coverPhotoUrl})` }}>
+                                {
+                                    !album.coverPhotoUrl &&
+                                    <AlbumIcon size={100} />
+                                }
                             </div>   
                         }
                     </div>
-                    <div>
+                    <div className="title-container">
                         <h2 className="album-title">{album.name}</h2>
-                        <NavLink to={`/artist/${album.profileId}`}>
+                        <NavLink to={`/artist/${album.profileId}`} style={{ color: "black" }}>
                             <p className="profile-artist">{profile?.username}</p>
                         </NavLink>
                         {
@@ -91,6 +93,9 @@ const Album = ({ album }) => {
                 message={`Are you sure you want to delete album ${album.name}?`}
                 action={handleDeleteAlbum}
             />
+            <div style={{ height: "2rem" }}>
+
+            </div>
         </>
     );
 }

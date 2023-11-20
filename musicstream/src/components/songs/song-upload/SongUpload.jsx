@@ -53,6 +53,10 @@ const SongUpload = ({ setOpenModal }) => {
     return (
         <div>
             <div className="form-group">
+                <label className="form-label" htmlFor="name">name of the song:</label>
+                <input autoFocus type="text" className="form-input" id="name" name="name" onChange={(e) => handleNameChange(e)}></input>
+            </div>
+            <div className="form-group">
                 <label className="form-label" htmlFor="album">album to upload song to:</label>
                 <select className="form-input" id="album" name="album" onChange={(e) => handleAlbumChange(e)}>
                     <option></option>
@@ -66,10 +70,6 @@ const SongUpload = ({ setOpenModal }) => {
                         })
                     }
                 </select>
-            </div>
-            <div className="form-group">
-                <label className="form-label" htmlFor="name">name of the song:</label>
-                <input type="text" className="form-input" id="name" name="name" onChange={(e) => handleNameChange(e)}></input>
             </div>
 
             <div className="form-group">

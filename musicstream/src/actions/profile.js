@@ -6,7 +6,8 @@ import {
   GET_PROFILE,
   SET_ALERT,
   USER_LOADED,
-  EDIT_PROFILE
+  EDIT_PROFILE,
+  FOLLOW_ARTIST
 } from './types';
 
 export const createArtistProfile = (formData, navigate, setHasProfile) => async (dispatch) => {
@@ -169,6 +170,35 @@ export const editNormalUserProfile = (formData, callback) => async (dispatch) =>
         type: GET_PROFILE,
         payload: res.data.profile
       })
+      callback(res.data.profile)
+    }
+  } catch (err) {
+    const errors = err.response?.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR
+    });
+  }
+};
+
+export const followArist = (artistId, callback) => async (dispatch) => {
+  try {
+    const res = await api.put('/profile/follow', { artistId });
+
+    if (res.data?.profile) {
+      dispatch({
+        type: FOLLOW_ARTIST,
+        payload: res.data.profile
+      });
+      dispatch({
+        type: SET_ALERT,
+        payload: { type: "success", msg: "Artist followed" }
+      });
+
       callback(res.data.profile)
     }
   } catch (err) {

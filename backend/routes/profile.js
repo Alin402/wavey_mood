@@ -10,8 +10,10 @@ const {
     getNormalUserProfile,
     editArtistProfile,
     editNormalUserProfile,
-    getArtistProfileView
+    getArtistProfileView,
+    followArtist
 } = require("../controllers/profile");
+const UserProfile = require('../models/userProfile');
 
 router.post('/artist', [
     protect,
@@ -25,6 +27,12 @@ router.get("/artist/one/:artistId", protect, getArtistProfileView)
 router.post('/normalUser', [
   protect,
   body("username").notEmpty().withMessage("You must choose a username"),
+  body('username').custom(async value => {
+    const profile = await UserProfile.findOne({ username: value });
+    if (profile) {
+      throw new Error('Username already taken');
+    }
+  })
 ], createNormalUserProfile)
 
 router.get('/normalUser', protect, getNormalUserProfile);
@@ -38,5 +46,9 @@ router.put('/normalUser/edit', [
   protect,
   body("username").notEmpty().withMessage("You must choose a username"),
 ], editNormalUserProfile)
+
+router.put('/follow', [
+  protect,
+], followArtist)
 
 module.exports = router;

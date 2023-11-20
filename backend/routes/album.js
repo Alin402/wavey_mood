@@ -8,7 +8,8 @@ const {
     uploadSong,
     getAlbum,
     deleteAlbum,
-    getAlbumsView
+    getAlbumsView,
+    getLatestAlbums
 } = require("../controllers/album");
 const { uploadFile } = require("../utils/uploadFile");
 
@@ -22,6 +23,8 @@ router.get('/one/:albumId', protect, getAlbum);
 router.get('/all', protect, getAllAlbums);
 
 router.get("/view/:profileId", protect, getAlbumsView)
+
+router.get("/latest", protect, getLatestAlbums)
 
 router.post("/uploadSong", [
   protect,

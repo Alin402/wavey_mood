@@ -1,6 +1,5 @@
 .album-list {
-    width: 90%;
-    margin: 0 auto;
+    width: 100%;
 }
 
 .album-list-container {
@@ -12,7 +11,8 @@
 .album {
     width: 40rem;
     height: 6rem;
-    margin: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
     background-color: #1E1D1B;
     display: flex;
     align-items: center;
@@ -28,8 +28,6 @@
     color: #fff;
     font-size: 1.3em;
     transition: all .2s;
-    margin-left: 2rem;
-    text-decoration: none;
 }
 
 .album-link:hover {
@@ -41,4 +39,12 @@
     right: 0;
     top: .7rem;
     cursor: pointer;
+}
+
+.followed-artist-profile-image {
+    width: 5rem;
+    height: 5rem;
+    background-color: #d3d3d3;
+    background-size: cover;
+    margin-left: 3px;
 }

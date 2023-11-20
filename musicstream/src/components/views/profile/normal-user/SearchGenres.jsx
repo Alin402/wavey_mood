@@ -38,11 +38,11 @@ const SearchGenres = ({ addGenre, removeGenre, favoriteGenres }) => {
                         <input className="form-input" id="search" name="search" value={field} onChange={(e) => handleFieldChange(e)}></input>
                     </div>
                 </div>
-                <div className="results-container">
+                <div className="results-container-genre">
                     {
                         results.length !== 0 && results.map((genre, index) => {
                             return (
-                                <div className="result retro-style" key={index} onClick={() => addGenre(genre.name)}>
+                                <div className="result-genre retro-style" key={index} onClick={() => addGenre(genre.name)}>
                                     <h2>{genre.name}</h2>
                                     <PlusIcon size={30} style={{ cursor: "pointer" }} />
                                 </div>

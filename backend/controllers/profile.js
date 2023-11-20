@@ -221,6 +221,37 @@ const getArtistProfileView = asyncHandler(async (req, res) => {
     }
 })
 
+const followArtist = asyncHandler(async (req, res) => {
+    try {
+        let userProfile = await UserProfile.findOne({ userId: req.user.id });
+
+        if (!userProfile) {
+            return res.status(404).json({ errors: [ { msg: "You must have a profile in order to follow an artist" } ] })
+        }
+
+        let artistProfile = await ArtistProfile.findOne({ _id: req.body.artistId });
+
+        if (!artistProfile) {
+            return res.status(404).json({ errors: [ { msg: "Artist profile not found" } ] })
+        }
+
+        if (userProfile.followedArtists.includes(req.body.artistId)) {
+            return res.status(400).json({ errors: [ { msg: "Already following" } ] })
+        }
+
+        userProfile.followedArtists.push(req.body.artistId);
+        artistProfile.noFollowers++;
+
+        await userProfile.save();
+        await artistProfile.save();
+
+        return res.status(200).json({ profile: userProfile });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
 module.exports = {
     createArtistProfile,
     getArtistProfile,
@@ -228,5 +259,6 @@ module.exports = {
     getNormalUserProfile,
     editArtistProfile,
     editNormalUserProfile,
-    getArtistProfileView
+    getArtistProfileView,
+    followArtist
 }

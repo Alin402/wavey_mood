@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import AlbumResults from "./AlbumResults";
 import SongResults from "./SongResults";
+import ArtistResults from "./ArtistResults";
 
 const SearchResults = ({ 
     results,
@@ -17,7 +18,7 @@ const SearchResults = ({
             case "song":
                 return <SongResults results={results} />
             case "artist":
-                return <h2>artist:</h2>
+                return <ArtistResults results={results} />
             default:
                 return <h2>no results</h2>
         }
@@ -73,6 +74,7 @@ const Search = () => {
     const handleChangeSearchBy = (e) => {
         setSearchBy(e.target.value);
         setResults([]);
+        setField("");
     }
 
     return (
@@ -80,6 +82,7 @@ const Search = () => {
             <div className="search-input-container">
                 <div>
                     <input 
+                        value={field}
                         style={{ width: "50rem" }} 
                         className="form-input search-input" 
                         id="field" 
