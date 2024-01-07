@@ -9,6 +9,8 @@ import {
     deleteAlbum
 } from "../../../actions/album";
 import { useDispatch } from "react-redux";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 const Album = ({ album, inDeleteMode, setInDeleteMode, showArtist }) => {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -34,7 +36,15 @@ const Album = ({ album, inDeleteMode, setInDeleteMode, showArtist }) => {
                         <DeleteIcon size={40} color={"#b90e0a"} onClick={handleOpenDeleteModal} />
                     </div>
                 }
-               <div className="followed-artist-profile-image retro-style" style={{ backgroundImage: `url(${album.coverPhotoUrl})` }}></div>
+                {
+                    !album.coverPhotoUrl ?
+                    <div className="followed-artist-profile-image retro-style"></div> :
+                    <LazyLoadImage
+                        className="retro-style followed-artist-profile-image"
+                        src={album.coverPhotoUrl}
+                        effect="opacity"
+                    />
+                }
                 <div>
                     <div style={{ marginLeft: "1rem" }}>
                         <Link to={`/album/${album._id}`} className="album-link">

@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const { validationResult } = require("express-validator");
+const axios = require("axios");
 
 const registerUser = asyncHandler(async (req, res) => {
     const { email, name, password, isArtist } = req.body;
@@ -31,6 +32,30 @@ const registerUser = asyncHandler(async (req, res) => {
 
         res.status(200).json({
             user
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+})
+
+const googleRegisterUser = asyncHandler(async (req, res) => {
+    const { code } = req.body;
+
+    const errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        let decoded = await jwt.decode(code);
+
+        res.status(200).json({
+            cred: {
+                email: decoded.email,
+                name: decoded.name
+            }
         })
     } catch (error) {
         console.error(error);
@@ -97,5 +122,6 @@ const getMe = asyncHandler(async (req, res) => {
 module.exports = {
     registerUser,
     loginUser,
-    getMe
+    getMe,
+    googleRegisterUser
 }

@@ -9,10 +9,11 @@ import { api } from "../../../utils/api";
 import { setAlert } from "../../../actions/alert";
 import Album from "../../album/album/Album";
 import { addToRecentlyViewed } from "../../../utils/addToRecentlyViewed";
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 const AlbumView = () => {
     const location = useLocation();
-    const [albumId, setAlbumId] = useState("");
+    const [albumId, setAlbumId] = useState(null)
     const [album, setAlbum] = useState({});
 
     const dispatch = useDispatch();
@@ -24,37 +25,38 @@ const AlbumView = () => {
         setAlbumId(substring);
 
         const getAlbum = async () => {
-            try {
-                const res = await api.get(`/album/one/${substring}`)
-                if (res.data?.album) {
-                    setAlbum(res.data.album);
-                    addToRecentlyViewed(res.data?.album);
+            if (substring) {
+                try {
+                    const res = await api.get(`/album/one/${substring}`)
+                    if (res.data?.album) {
+                        setAlbum(res.data.album);
+                        addToRecentlyViewed(res.data?.album);
+                    }
+                } catch (err) {
+                    const errors = err.response?.data.errors;
+    
+                    if (errors) {
+                        errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
+                    }
+    
+                    dispatch({
+                        type: ALBUM_ERROR
+                    });
                 }
-            } catch (err) {
-                const errors = err.response?.data.errors;
-
-                if (errors) {
-                    errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
-                }
-
-                dispatch({
-                    type: ALBUM_ERROR
-                });
             }
         }
 
         getAlbum();
     }, [])
 
-    return (
+    return !album ? <h2>loading...</h2> :
+    (
         <div className="album-view">
-            {
-                !album ?
-                <h2>loading...</h2> :
+            <LazyLoadComponent>
                 <Album
                     album={album}
                 />
-            }
+            </LazyLoadComponent>
         </div>
     )
 }

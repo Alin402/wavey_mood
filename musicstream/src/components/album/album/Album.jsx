@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { api } from "../../../utils/api";
 import { setAlert } from "../../../actions/alert";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 const Album = ({ album }) => {
     const [profile, setProfile] = useState({})
@@ -21,16 +23,18 @@ const Album = ({ album }) => {
 
     useEffect(() => {
         const getProfile = async () => {
-            try {
-                const res = await api.get(`/profile/artist/one/${album.profileId}`)
-                if (res.data?.artist) {
-                    setProfile(res.data.artist);
-                }
-            } catch (err) {
-                const errors = err.response?.data.errors;
-
-                if (errors) {
-                    errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
+            if (album.profileId) {
+                try {
+                    const res = await api.get(`/profile/artist/one/${album.profileId}`)
+                    if (res.data?.artist) {
+                        setProfile(res.data.artist);
+                    }
+                } catch (err) {
+                    const errors = err.response?.data.errors;
+    
+                    if (errors) {
+                        errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
+                    }
                 }
             }
         }
@@ -45,19 +49,21 @@ const Album = ({ album }) => {
         }))
     }
 
-    return (
+    return !album ? <h2>Loading...</h2> : 
+    (
         <>
             <div className="album-container">
                 <div className="album-header retro-style">
                     <div>
                         {
-                            <div className="missing-album-picture retro-style"
-                            style={{ backgroundImage: `url(${album.coverPhotoUrl})` }}>
-                                {
-                                    !album.coverPhotoUrl &&
-                                    <AlbumIcon size={100} />
-                                }
-                            </div>   
+                            !album.coverPhotoUrl ?
+                            <div className="missing-album-picture retro-style">
+                                <AlbumIcon size={100} />
+                            </div> :
+                            <LazyLoadImage className="profile-image retro-style"
+                                src={album.coverPhotoUrl}
+                                effect="opacity"
+                            />
                         }
                     </div>
                     <div className="title-container">

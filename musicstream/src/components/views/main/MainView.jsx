@@ -5,6 +5,7 @@ import Search from "../../search/Search";
 import RecentlyViewed from "./RecentlyViewed";
 import FollowedArtists from "./FollowedArtists";
 import LatestReleased from "./LatestReleased";
+import { LazyLoadImage, LazyLoadComponent } from 'react-lazy-load-image-component';
 
 const LandingView = () => {
     const user = useSelector((state) => state.user.user.user);
@@ -13,18 +14,24 @@ const LandingView = () => {
         <div className="landing-main">
             <Search />
             <div style={{ marginTop: "2rem" }}>
-                <RecentlyViewed />
+                <LazyLoadComponent>
+                    <RecentlyViewed />
+                </LazyLoadComponent>
             </div>
 
             <div style={{ marginTop: "2rem" }}>
-                {
-                    !user.isArtist &&
-                    <FollowedArtists />
-                }
+                <LazyLoadComponent>
+                    {
+                        !user.isArtist &&
+                        <FollowedArtists />
+                    }
+                </LazyLoadComponent>
             </div>
 
             <div style={{ marginTop: "2rem" }}>
-                <LatestReleased />
+                <LazyLoadComponent>
+                    <LatestReleased />
+                </LazyLoadComponent>
             </div>
 
             <div style={{ height: "2rem" }}></div>

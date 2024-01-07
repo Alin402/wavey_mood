@@ -84,7 +84,7 @@ const uploadSong = asyncHandler(async (req, res) => {
     const { name, duration, albumId } = req.body;
     const file = req.file;
 
-    if (!name || ! duration || !albumId || !file) {
+    if (!name || !duration || !albumId || !file) {
         return res.status(400).json({ errors: [{ msg: "Incorrect data provided" }] });
     }
 

@@ -4,6 +4,7 @@ const {
   registerUser,
   loginUser,
   getMe,
+  googleRegisterUser
 } = require('../controllers/user')
 const { protect } = require('../middleware/auth');
 const { body } = require("express-validator");
@@ -22,6 +23,10 @@ router.post('/', [
   }),
 ], registerUser)
 
+router.post('/google', [
+  body("code").notEmpty().withMessage("Google auth code is required"),
+], googleRegisterUser)
+
 router.post('/login', [
   body('email').custom(async value => {
     const user = await User.findOne({ email: value });
@@ -32,4 +37,4 @@ router.post('/login', [
 ], loginUser)
 router.get('/me', protect, getMe)
 
-module.exports = router
+module.exports = router;

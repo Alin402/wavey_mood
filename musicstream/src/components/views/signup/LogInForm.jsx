@@ -3,6 +3,7 @@ import { login } from "../../../actions/user";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
+import { NavLink } from "react-router-dom";
 
 const LogInForm = () => {
     const navigate = useNavigate();
@@ -35,6 +36,10 @@ const LogInForm = () => {
                 </div>
                 <div className="form-group">
                     <button className="btn-submit" onClick={submit}>Log In</button>
+                </div>
+                <div className="form-group">
+                    <h2>don't have an account? 
+                    <br /> click <NavLink to="/signup">here</NavLink> to sign up</h2>
                 </div>
             </div>
             <div className="signup-shadow-login"></div>
