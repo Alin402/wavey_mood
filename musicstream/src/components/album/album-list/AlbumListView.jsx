@@ -13,16 +13,18 @@ const AlbumList = ({ profile }) => {
 
     useEffect(() => {
         const getAlbums = async () => {
-            try {
-                const res = await api.get(`/album/view/${profile._id}`)
-                if (res.data?.albums) {
-                    setAlbums(res.data.albums);
-                }
-            } catch (err) {
-                const errors = err.response?.data.errors;
-
-                if (errors) {
-                    errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
+            if (profile._id) {
+                try {
+                    const res = await api.get(`/album/view/${profile._id}`)
+                    if (res.data?.albums) {
+                        setAlbums(res.data.albums);
+                    }
+                } catch (err) {
+                    const errors = err.response?.data.errors;
+    
+                    if (errors) {
+                        errors.forEach((error) => dispatch(setAlert({ msg: error.msg, type: 'error' })));
+                    }
                 }
             }
         }

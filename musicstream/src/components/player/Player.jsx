@@ -12,6 +12,8 @@ import {
     setCurrentSong
 } from "../../actions/songQueue";
 import "./Player.css";
+import { MdOpenInFull as OpenFullScreenIcon } from "react-icons/md";
+import { MdCloseFullscreen as CloseFullScreenIcon } from "react-icons/md";
 
 const PlayIcon = () => 
     <BsFillPlayBtnFill 
@@ -43,7 +45,7 @@ const VolumeMuteIcon = () =>
         color="#F2EADE"
     />
 
-const Player = ({ pause, play }) => {
+const Player = ({ pause, play, inFullscreenMode, setInFullscreenMode }) => {
     const dispatch = useDispatch();
     const currentSong = useSelector((state) => state.songQueue.currentSong);
     const songs = useSelector((state) => state.songQueue.songs)
@@ -70,6 +72,10 @@ const Player = ({ pause, play }) => {
         }
     }
 
+    const handleToggleFullScreenMode = () => {
+        setInFullscreenMode(!inFullscreenMode);
+    }
+
     return (
         <div className="player">
             <div className="song-info">
@@ -91,8 +97,9 @@ const Player = ({ pause, play }) => {
                     src={`https://wavymoodstorage.blob.core.windows.net/mp3files/${currentSong?.fileUrl}?sv=2022-11-02&ss=bqtf&srt=sco&sp=rwdlacuptfxiy&se=2024-01-08T10:22:40Z&sig=i2qzbFQlGJXxutoyghZg%2BHBPFo8jFM7A66tDVSMILSs%3D&_=1704680662972`}
                     showFilledProgress
                     style={{ 
-                        backgroundColor: "#1E1D1B",
-                        color: "#F2EADE"
+                        backgroundColor: inFullscreenMode ? "inherit" : "#1E1D1B",
+                        color: "#F2EADE",
+                        boxShadow: "none"
                     }}
                     customIcons={{
                         play: <PlayIcon />,
@@ -111,7 +118,11 @@ const Player = ({ pause, play }) => {
                 />
             </div>
             <div className="action">
-
+                {
+                    inFullscreenMode ?
+                    <CloseFullScreenIcon onClick={handleToggleFullScreenMode} size={40} className="open-full-screen-icon" style={{ color: "#ef5aa0" }} /> :
+                    <OpenFullScreenIcon onClick={handleToggleFullScreenMode} size={40} className="open-full-screen-icon" />
+                }
             </div>
         </div>
     );

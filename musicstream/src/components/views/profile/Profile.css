@@ -167,3 +167,14 @@
 .normal-profile-container {
     width: 100%;
 }
+
+.followers-count {
+    text-align: center;
+    color: #fff;
+}
+
+.followers-number {
+    background-color: black;
+    padding: 5px;
+    border-radius: 3px;
+}

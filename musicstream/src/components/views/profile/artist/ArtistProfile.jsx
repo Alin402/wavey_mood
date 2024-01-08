@@ -7,12 +7,10 @@ import ImageUpload from "../image-upload/ImageUpload";
 import { createArtistProfile, getArtistProfile } from "../../../../actions/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ProfileImage from "../profile-image/ProfileImage";
-import {
-    loadUser
-} from "../../../../actions/user";
 import AlbumList from "../../../album/album-list/AlbumList";
 import { NavLink } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 const ArtistProfile = ({ user }) => {
     const dispatch = useDispatch();
@@ -95,17 +93,23 @@ const ArtistProfile = ({ user }) => {
             {
                 (user.hasProfile && !loadingProfile) || (hasProfile) ?
                 <div>
-                    <div
-                        className="cover-photo"
-                        style={{ backgroundImage: `url(${profile.coverPhotoUrl})` }}
-                    >
-                        {
-                            !profile.coverPhotoUrl &&
+                    {
+                        !profile.coverPhotoUrl ?
+                        <div
+                            className="cover-photo-artist-view retro-style"
+                            loading="lazy"
+                        >
                             <div className="missing-cover-photo">
                                 <PhotoIcon size={150} color={"#A9A9A9"} />
                             </div>
-                        }
-                    </div>
+                        </div> :
+                        <LazyLoadImage 
+                            className="cover-image retro-style" 
+                            src={profile.coverPhotoUrl} 
+                            effect="opacity"
+                            width="100%"
+                        />
+                    }
                     <div className="created-profile retro-style" style={{ marginTop: "2rem" }}>
                         <div className="margin-top">
                             <div 
@@ -127,6 +131,7 @@ const ArtistProfile = ({ user }) => {
                         <div className="created-profile-right">
                             <div>
                                 <h2 className="username-title">{profile.username}</h2>
+                                <h2 className="followers-count">followers: <span className="followers-number">{profile.noFollowers}</span></h2>
                             </div>   
                             <div className="genres-container" style={{ marginBottom: "1rem" }}>
                                 {

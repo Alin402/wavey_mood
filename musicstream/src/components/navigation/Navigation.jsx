@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../actions/user";
 import ProfileDropDown from "./ProfileNav";
 import navlogo from "./logov2_white.svg";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 const Navigation = () => {
     const user = useSelector((state) => state.user);

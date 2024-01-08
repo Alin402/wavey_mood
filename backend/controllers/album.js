@@ -109,7 +109,7 @@ const uploadSong = asyncHandler(async (req, res) => {
     const fileUrl = getBlobName(file.originalname);
     uploadMp3(file, fileUrl);
 
-    if (!name || ! duration || !albumId || !file) {
+    if (!name || !duration || !albumId || !file) {
         return res.status(400).json({ errors: [{ msg: "Incorrect data provided" }] });
     }
 

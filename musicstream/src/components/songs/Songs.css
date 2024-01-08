@@ -26,8 +26,34 @@
 .play-icon {
     cursor: pointer;
     transition: all .2s;
+    position: relative;
 }
 
 .play-icon:hover {
     transform: scale(1.1);
+}
+
+.playlist-dropdown {
+    width: 15rem;
+    min-height: 10rem;
+    background-color: #ef5aa0;
+    position: absolute;
+    top: 0;
+    right: -15rem;
+    padding: .5rem;
+}
+
+.playlist-dropdown-playlist {
+    background-color: #009E9A;
+    padding: .5rem;
+    margin-bottom: .5rem;
+    font-weight: 700;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.playlist-dropdown-playlist:hover {
+    background-color: #1E1D1B;
+    color: #fff;
 }
