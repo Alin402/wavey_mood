@@ -88,7 +88,7 @@ const Player = ({ pause, play }) => {
                 <AudioPlayer
                     autoPlayAfterSrcChange={true}
                     showSkipControls
-                    src={`http://localhost:5000/songs/${currentSong.fileUrl}`}
+                    src={`https://wavymoodstorage.blob.core.windows.net/mp3files/${currentSong?.fileUrl}?sv=2022-11-02&ss=bqtf&srt=sco&sp=rwdlacuptfxiy&se=2024-01-08T10:22:40Z&sig=i2qzbFQlGJXxutoyghZg%2BHBPFo8jFM7A66tDVSMILSs%3D&_=1704680662972`}
                     showFilledProgress
                     style={{ 
                         backgroundColor: "#1E1D1B",
