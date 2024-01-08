@@ -18,7 +18,7 @@ const Song = ({ song }) => {
     const dispatch = useDispatch();
     const [album, setAlbum] = useState({});
     const currentSong = useSelector((state) => state.songQueue.currentSong);
-    const user = useSelector((state) => state.user.user.user);
+const user = useSelector((state) => state.user.user.user);
 
     useEffect(() => {
         const getAlbum = async () => {
