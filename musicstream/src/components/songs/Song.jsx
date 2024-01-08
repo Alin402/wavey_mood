@@ -58,13 +58,6 @@ const user = useSelector((state) => state.user.user.user);
                     </NavLink>
                 </div>
             </div>
-<<<<<<< HEAD
-            {
-                currentSong?._id === song?._id ?
-                <PlayingIcon color="#ef5aa0" size={50} className="play-icon" /> :
-                <PlayIcon color="#ef5aa0" size={50} className="play-icon" onClick={handlePlaySong} />
-            }
-=======
             <div style={{ display: "flex" }}>
                 {
                     currentSong._id === song._id ?
@@ -76,7 +69,6 @@ const user = useSelector((state) => state.user.user.user);
                     <AddSongToPlaylist song={song} />
                 }
             </div>
->>>>>>> create-album
         </div>
     )
 }
