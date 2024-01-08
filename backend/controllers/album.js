@@ -3,7 +3,14 @@ const ArtistProfile = require("../models/artistProfile");
 const User = require("../models/user");
 const Album = require("../models/album");
 const { validationResult } = require("express-validator");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const axios = require("axios");
+
+const { BlockBlobClient } = require("@azure/storage-blob");
+const { formidable, errors} = require('formidable');
+const toStream = require('buffer-to-stream')
+
+const AZURE_STORAGE_CONNECTION_STRING = process.env["AZURE_STORAGE_CONNECTION_STRING"]
 
 const createAlbum = asyncHandler(async (req, res) => {
     const { name, coverPhotoUrl, songs } = req.body;
@@ -80,9 +87,27 @@ const getAllAlbums = asyncHandler(async (req, res) => {
     }
 })
 
+const getBlobName = originalName => {
+    const identifier = Math.random().toString().replace(/0\./, ''); // remove "0." from start of string
+    return `${identifier}-${originalName}.mp3`;
+};
+
+const uploadMp3 = async (file, blobName) => {
+    const containerName = "mp3files";
+    const blobService = new BlockBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,blobName)
+    const stream = toStream(file.buffer)
+    const streamLength = file.buffer.length;
+    const options = { blobHTTPHeaders: { blobContentType: 'audio/mp3' } };
+
+    await blobService.uploadStream(stream, streamLength, undefined, options);
+    console.log("success")
+}
+
 const uploadSong = asyncHandler(async (req, res) => {
-    const { name, duration, albumId } = req.body;
+    const { name, duration, albumId} = req.body;
     const file = req.file;
+    const fileUrl = getBlobName(file.originalname);
+    uploadMp3(file, fileUrl);
 
     if (!name || ! duration || !albumId || !file) {
         return res.status(400).json({ errors: [{ msg: "Incorrect data provided" }] });
@@ -111,7 +136,7 @@ const uploadSong = asyncHandler(async (req, res) => {
         let newSong = {
             albumId,
             name,
-            fileUrl: file.filename,
+            fileUrl,
             duration,
             artistName: profile.username,
             albumName: album.name
